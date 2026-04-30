@@ -1,0 +1,894 @@
+\documentclass[11pt,a4paper]{article}
+
+%─── Packages ─────────────────────────────────────────────────────────────────
+\usepackage[a4paper, top=2.2cm, bottom=2.2cm, left=2.2cm, right=2.2cm]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{parskip}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{colortbl}
+\usepackage{mdframed}
+
+%─── Colours ──────────────────────────────────────────────────────────────────
+\definecolor{primary}{RGB}{37,99,235}
+\definecolor{secdark}{RGB}{30,58,138}
+\definecolor{boxbg}{RGB}{241,245,249}
+\definecolor{boxborder}{RGB}{148,163,184}
+\definecolor{tagbg}{RGB}{219,234,254}
+\definecolor{tagtxt}{RGB}{30,64,175}
+\definecolor{green}{RGB}{22,163,74}
+\definecolor{red}{RGB}{220,38,38}
+\definecolor{amber}{RGB}{217,119,6}
+\definecolor{rowalt}{RGB}{248,250,252}
+
+%─── Section styles ───────────────────────────────────────────────────────────
+\titleformat{\section}
+  {\Large\bfseries\color{secdark}}
+  {\thesection}{0.7em}{}
+  [\titlerule]
+
+\titleformat{\subsection}
+  {\large\bfseries\color{primary}}
+  {\thesubsection}{0.6em}{}
+
+\titleformat{\subsubsection}
+  {\normalsize\bfseries}
+  {\thesubsubsection}{0.5em}{}
+
+\titlespacing{\section}{0pt}{18pt}{8pt}
+\titlespacing{\subsection}{0pt}{12pt}{6pt}
+
+%─── tcolorbox styles ─────────────────────────────────────────────────────────
+\tcbuselibrary{breakable,skins}
+
+\newtcolorbox{hcimap}{
+  colback=boxbg, colframe=boxborder,
+  fonttitle=\small\bfseries\color{secdark},
+  title={HCI Principles Applied},
+  breakable, arc=3pt, boxrule=0.6pt,
+  left=5pt,right=5pt,top=4pt,bottom=4pt,
+  fontupper=\small
+}
+
+\newcommand{\ptag}[1]{\colorbox{tagbg}{\textcolor{tagtxt}{\textbf{\small #1}}}}
+
+%─── Header / Footer ──────────────────────────────────────────────────────────
+\pagestyle{fancy}\fancyhf{}
+\rhead{\small\textcolor{primary}{\textbf{NeoFinance Pro — Project report}}}
+\lhead{\small\textcolor{gray}{Human-Computer Interaction}}
+\cfoot{\small\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+
+%─── Hyperref ─────────────────────────────────────────────────────────────────
+\hypersetup{colorlinks,linkcolor=primary,urlcolor=primary,pdftitle={NeoFinance Pro HCI End Sem Report}}
+
+%─── Screenshot macro ─────────────────────────────────────────────────────────
+% Usage: \screen{filename}{caption}{label}
+% Screenshots folder: C:\Users\varsh\Desktop\HCI_PROJECT\screenshots\
+\newcommand{\screen}[3]{%
+  \begin{figure}[H]\centering
+    \fbox{\includegraphics[width=0.90\textwidth]{screenshots/#1}}
+    \caption{\small #2}\label{fig:#3}
+  \end{figure}}
+
+\newcommand{\dualscreen}[6]{%
+  \begin{figure}[H]\centering
+    \begin{subfigure}[t]{0.47\textwidth}
+      \fbox{\includegraphics[width=\textwidth]{screenshots/#1}}\caption{\small #2}\label{fig:#3}
+    \end{subfigure}\hfill
+    \begin{subfigure}[t]{0.47\textwidth}
+      \fbox{\includegraphics[width=\textwidth]{screenshots/#4}}\caption{\small #5}\label{fig:#6}
+    \end{subfigure}
+  \end{figure}}
+
+%══════════════════════════════════════════════════════════════════════════════
+\begin{document}
+%══════════════════════════════════════════════════════════════════════════════
+%─── Title Page ───────────────────────────────────────────────────────────────
+\begin{titlepage}
+\centering
+
+  \vspace*{1.2cm}
+
+  {\Large\bfseries\color{secdark} HCI PROJECT}\\[0.3cm]
+
+  {\Huge\bfseries\color{secdark} NeoFinance Pro}\\[0.2cm]
+  {\Large\bfseries\color{primary} A Comprehensive Digital Lending Platform}\\[0.5cm]
+
+  {\normalsize Human-Computer Interaction Design Project}
+
+  \vspace{0.8cm}
+
+  \noindent\rule{\textwidth}{1.2pt}
+  \vspace{0.5cm}
+
+  \begin{tabular}{r l}
+    \textbf{Team Members:} & Avula Varshini (CS23B1015) \\
+                      & Vyshnavi (CS23B1019) \\[7pt]
+    \textbf{Subject:}    & Human-Computer Interaction \\[7pt]
+    \textbf{Platform:}  &  Figma \\[7pt]
+    \textbf{Date:}       & April 2026 \\
+  \end{tabular}
+
+  \vspace{0.8cm}
+
+  \noindent\rule{\textwidth}{1.2pt}
+  \vspace{0.8cm}
+
+  \begin{mdframed}[backgroundcolor=boxbg,linecolor=boxborder,linewidth=0.6pt]
+  \small\textbf{Abstract.}
+  This report presents the End Semester HCI analysis of \textbf{NeoFinance Pro}, a full-stack digital lending and financial services platform designed for the Indian market. The platform has ten major modules: Homepage, Authentication, Customer Dashboard, Loan Application Wizard, EMI Marketplace, Repayment Center, User Profile, Accessibility Settings, Support Center, and Admin Analytics Dashboard. Each screen is evaluated using key HCI principles including Shneiderman's Rules, Nielsen's Heuristics, Gestalt Laws, and Universal Design. The system prioritises high-impact features while ensuring usability, accessibility, and trust.
+  \end{mdframed}
+
+  \vfill
+  {\small\textcolor{gray}{Department of Computer Science \& Engineering | HCI Design Project}}
+
+\end{titlepage}
+%─── Table of Contents ────────────────────────────────────────────────────────
+\tableofcontents\newpage
+
+%══════════════════════════════════════════════════════════════════════════════
+\section{Introduction}
+%══════════════════════════════════════════════════════════════════════════════
+
+\subsection{Problem Statement}
+
+\textbf{NeoFinance Pro} is a digital lending platform built for the Indian market. It recognises that in high-stakes financial interactions, \textit{every interface decision is a trust decision}. The platform applies HCI principles to every design choice --- from button placement to colour selection --- to reduce anxiety, build confidence, and make complex financial processes feel simple.
+
+\subsection{Application Domain Overview}
+
+NeoFinance Pro serves two primary user groups (customers and admins) across ten modules:
+
+\begin{table}[H]
+\caption{Platform Module Overview}
+\centering\small
+\begin{tabularx}{\textwidth}{l X l}
+\toprule
+\textbf{Module} & \textbf{Purpose} & \textbf{Primary User} \\
+\midrule
+\rowcolor{rowalt} Homepage & Brand entry, EMI calculator, trust signals & All visitors \\
+Authentication & Secure login/signup with role-based routing & New \& returning users \\
+\rowcolor{rowalt} Customer Dashboard & Portfolio overview, quick actions, analytics & Loan holders \\
+Loan Application & 3-step wizard for loan applications & Prospective borrowers \\
+\rowcolor{rowalt} EMI Marketplace & Browse \& purchase on EMI & Consumers \\
+Repayment Center & Payment gateway, history, AutoPay & Active borrowers \\
+\rowcolor{rowalt} User Profile & Account management, loan tracking & Registered users \\
+Accessibility Settings & Visual/interaction customisation & All users \\
+\rowcolor{rowalt} Support Center & Help, FAQ, AI chat assistant & All users \\
+Admin Dashboard & Analytics, application management & Admin/Staff \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+%══════════════════════════════════════════════════════════════════════════════
+\section{Existing System Problems}
+%══════════════════════════════════════════════════════════════════════════════
+
+\begin{table}[H]
+\caption{Problems in Existing Digital Lending Interfaces}
+\centering\small
+\begin{tabularx}{\textwidth}{l X X}
+\toprule
+\textbf{Problem Area} & \textbf{Existing System Failure} & \textbf{NeoFinance Pro Solution} \\
+\midrule
+\rowcolor{rowalt} Navigation & Deep hierarchies, no breadcrumbs & Flat nav, breadcrumbs, back buttons with context \\
+Forms & Single-page 20+ field forms, overwhelming & Multi-step wizard with live validation \\
+\rowcolor{rowalt} Feedback & No real-time system status & Live EMI calculator, eligibility meter, status badges \\
+Trust & Generic interfaces, no credibility signals & RBI badge, ISO certification, SSL notices \\
+\rowcolor{rowalt} Accessibility & No language support, poor contrast & 4-language support, contrast toggle, screen reader \\
+Error Handling & Generic ``Error'' messages & Specific, instructional inline messages \\
+\rowcolor{rowalt} Mobile & Desktop-only layouts & Fully responsive with collapsible navigation \\
+Help & No in-app guidance & AI chatbot, FAQ accordion, contextual tooltips \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+%══════════════════════════════════════════════════════════════════════════════
+\section{Information Architecture \& User Journeys}
+%══════════════════════════════════════════════════════════════════════════════
+
+The navigation is intentionally flat --- no feature is more than 3 clicks from the homepage. This applies Hick's Law (fewer choices = faster decisions) and reduces navigation fatigue.
+
+\textbf{Primary Journey --- New Borrower:}
+\begin{center}
+Homepage $\rightarrow$ Login/Signup $\rightarrow$ Step 1 (Personal) $\rightarrow$ Step 2 (Income) $\rightarrow$ Step 3 (Review) $\rightarrow$ Dashboard
+\end{center}
+
+\textbf{Primary Journey --- Returning Borrower (EMI Payment):}
+\begin{center}
+Dashboard $\rightarrow$ Pay EMI $\rightarrow$ Repayment Center $\rightarrow$ Select Method $\rightarrow$ Confirm $\rightarrow$ Receipt
+\end{center}
+
+\textbf{Primary Journey --- Product Consumer:}
+\begin{center}
+Homepage $\rightarrow$ EMI Store $\rightarrow$ Filter/Search $\rightarrow$ Product Card $\rightarrow$ Buy Now
+\end{center}
+
+%══════════════════════════════════════════════════════════════════════════════
+\section{Feature Priority — Pareto 80/20}
+%══════════════════════════════════════════════════════════════════════════════
+
+\begin{table}[H]
+\caption{Feature Priority Matrix — Pareto 80/20 Applied}
+\centering\small
+\begin{tabularx}{\textwidth}{l X c c}
+\toprule
+\textbf{Priority} & \textbf{Feature} & \textbf{Est.\ Usage} & \textbf{Access Depth} \\
+\midrule
+\rowcolor{tagbg}\textbf{VITAL (80\%)} & EMI Payment (Pay EMI) & Very High & 1 click from Dashboard \\
+\rowcolor{tagbg}\textbf{VITAL} & Loan Application Wizard & Very High & 1 click from Nav/Homepage \\
+\rowcolor{tagbg}\textbf{VITAL} & Application Status Tracking & High & Homepage / Dashboard \\
+\rowcolor{tagbg}\textbf{VITAL} & EMI Marketplace Browse & High & Nav item \\
+\rowcolor{tagbg}\textbf{VITAL} & Dashboard Overview & High & Direct post-login \\
+ Supporting & Profile Management & Medium & Nav $\rightarrow$ Profile \\
+ Supporting & Accessibility Settings & Medium & Settings dropdown \\
+ Supporting & Support / FAQ & Medium & Nav $\rightarrow$ Support \\
+ Supporting & Admin Dashboard & Low & Restricted route \\
+ Supporting & Payment History & Low & Repayment Center \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+%══════════════════════════════════════════════════════════════════════════════
+\section{Page-by-Page HCI Analysis}
+%══════════════════════════════════════════════════════════════════════════════
+
+%──────────────────────────────────────────────────────────────────────────────
+\subsection{Homepage}
+%──────────────────────────────────────────────────────────────────────────────
+
+% Screenshot filenames: home1.png, home2.png, home3.png, home4.png, home5.png, home6.png, home7.png
+\screen{home1.png}{Homepage}{home1}
+\screen{home2.png}{Homepage}{home2}
+\screen{home3.png}{Homepage}{home3}
+\screen{home4.png}{Homepage}{home4}
+\screen{home5.png}{Homepage}{home5}
+\screen{home6.png}{Homepage}{home6}
+\screen{home7.png}{Homepage}{home7}
+\subsubsection{Purpose \& Design Choices}
+
+\begin{itemize}[leftmargin=1.5em,itemsep=4pt]
+
+\item \textbf{Primary Goal:}
+Instantly communicate what the platform is and establish user trust.
+
+\item \textbf{Dual CTA Strategy:}
+"Apply Now" targets ready users, while "Check Eligibility" supports exploratory users, covering both intent types.
+
+\item \textbf{Above-the-Fold Priority:}
+Critical actions are placed in the hero section to eliminate unnecessary scrolling.
+
+\item \textbf{Live EMI Calculator:}
+Reduces financial uncertainty by showing exact monthly payments before signup.
+
+\item \textbf{Trust Signals Placement:}
+RBI badge, ISO certification, and ratings are placed early to reduce skepticism.
+
+\item \textbf{Social Proof:}
+Testimonials from Indian cities improve relatability and credibility.
+
+\item \textbf{User Experience Impact:}
+Reduces anxiety, improves clarity, and builds immediate confidence.
+
+\item \textbf{HCI Justification:}
+Follows Inverted Pyramid, Fitts’s Law, and Social Proof principles to guide user attention and decisions.
+
+\end{itemize}
+\begin{hcimap}
+\begin{itemize}[leftmargin=1.2em,itemsep=2pt]
+  \item \ptag{Inverted Pyramid} --- Most critical content (search/apply) above fold; supporting content (testimonials, stats) below.
+  \item \ptag{Pareto 80/20} --- Homepage hero gives 80\% of screen to the 3 most-used paths: Apply, EMI Store, Dashboard.
+  \item \ptag{Mental Models} --- Layout mirrors familiar banking portals (SBI, HDFC); users transfer existing knowledge.
+  \item \ptag{Fitts's Law} --- Large CTA buttons (min 48px height) reduce motor precision demand on mobile.
+  \item \ptag{Closure (Gestalt)} --- Four service cards in a row create perceptual completion of the offering landscape.
+  \item \ptag{Social Proof (Persuasion)} --- Customer count (10M+) and 4.8 rating leverage authority heuristic.
+  \item \ptag{Visibility of System Status} --- Hero section changes based on login state (guest vs.\ returning user).
+  \item \ptag{Primacy Effect} --- ``Apply Now'' positioned first in reading order ensures highest recall for primary action.
+\end{itemize}
+\end{hcimap}
+
+%──────────────────────────────────────────────────────────────────────────────
+\subsection{Authentication — Sign In \& Sign Up}
+%──────────────────────────────────────────────────────────────────────────────
+
+% Screenshot filenames: signin.png, signup.png
+\screen{signin.png}{Authentication — Sign In}{signin}
+\screen{signup.png}{Authentication — Sign Up}{signup}
+\subsubsection{Purpose \& Design Choices}
+
+\begin{itemize}[leftmargin=1.5em,itemsep=4pt]
+
+\item \textbf{Primary Goal:}
+Provide a secure and low-friction login/signup experience.
+
+\item \textbf{Two-Column Layout:}
+Left side builds trust (badges), right side focuses on task completion.
+
+\item \textbf{Tab-Based Navigation:}
+Sign In and Sign Up in one page avoids context switching.
+
+\item \textbf{Real-Time Validation:}
+Errors are caught immediately, reducing frustration.
+
+\item \textbf{Password Visibility Toggle:}
+Prevents login failures due to typing mistakes.
+
+\item \textbf{Minimal Fields:}
+Limits cognitive load and speeds up form completion.
+
+\item \textbf{User Experience Impact:}
+Reduces errors, increases confidence, and speeds up onboarding.
+
+\item \textbf{HCI Justification:}
+Applies Error Prevention, Recognition over Recall, and Miller’s Law.
+
+\end{itemize}
+
+\begin{hcimap}
+\begin{itemize}[leftmargin=1.2em,itemsep=2pt]
+  \item \ptag{Error Prevention} --- Real-time validation catches PAN, phone, email, and password errors before submission.
+  \item \ptag{Recognition over Recall} --- Tab labels clearly indicate Sign In vs.\ Sign Up; no need to infer from context.
+  \item \ptag{Learnability} --- Form follows universal web login convention; zero new learning for experienced web users.
+  \item \ptag{Miller's Law} --- 5 fields max per sign-up step; within the 7$\pm$2 cognitive limit.
+  \item \ptag{Mental Models} --- Google/Facebook OAuth buttons leverage existing mental model of social login.
+  \item \ptag{Shneiderman: Reduce Memory Load} --- Remember Me checkbox externalises session persistence decision.
+  \item \ptag{Authority (Persuasion)} --- RBI Registered badge and SSL encryption notice leverage authority principle.
+  \item \ptag{Proximity (Gestalt)} --- Error message placed immediately adjacent to the invalid field; no hunting.
+\end{itemize}
+\end{hcimap}
+
+%──────────────────────────────────────────────────────────────────────────────
+\subsection{Customer Dashboard}
+%──────────────────────────────────────────────────────────────────────────────
+
+% Screenshot filenames: investments1.png, investments2.png, investments3.png, investments4.png
+\screen{investments1.png}{Customer Dashboard}{dash1}
+\screen{investments2.png}{Customer Dashboard}{dash2}
+\screen{investments3.png}{Customer Dashboard}{dash3}
+\screen{investments4.png}{Customer Dashboard}{dash4}
+\subsubsection{Purpose \& Design Choices}
+
+\begin{itemize}[leftmargin=1.5em,itemsep=4pt]
+
+\item \textbf{Primary Goal:}
+Act as a central control panel for all user financial activities.
+
+\item \textbf{KPI Cards:}
+Displays key metrics (EMI, outstanding, credit score) for quick understanding.
+
+\item \textbf{Quick Actions Grid:}
+Places most-used actions (Pay EMI) in the most accessible position.
+
+\item \textbf{Visual Feedback:}
+Charts and analytics provide easy-to-understand financial insights.
+
+\item \textbf{Positive Reinforcement:}
+Credit score and payment success indicators build user motivation.
+
+\item \textbf{User Experience Impact:}
+Reduces navigation effort and improves decision-making speed.
+
+\item \textbf{HCI Justification:}
+Uses Serial Position Effect, Gestalt grouping, and At-a-Glance design principle.
+
+\end{itemize}
+
+\begin{hcimap}
+\begin{itemize}[leftmargin=1.2em,itemsep=2pt]
+  \item \ptag{At-a-Glance Dashboard} --- All critical metrics visible without any interaction.
+  \item \ptag{Shneiderman: Reduce Memory Load} --- Dashboard externalises entire loan portfolio state.
+  \item \ptag{Serial Position Effect} --- Pay EMI (highest frequency action) in top-left prime position.
+  \item \ptag{Similarity (Gestalt)} --- All KPI cards share identical structure and size; parsed as same type of data.
+  \item \ptag{Common Region (Gestalt)} --- Each section (KPIs, Actions, Transactions, Chart) enclosed in distinct card.
+  \item \ptag{Colour Semantics} --- Green for positive transactions, navy for outgoing payments --- consistent throughout.
+  \item \ptag{Dominance (Visual Design)} --- Credit score (805) displayed in large green bold text --- visual focus point.
+  \item \ptag{Proximity (Gestalt)} --- Related metrics (loan ID + type) grouped in table cells; financial figures form clusters.
+\end{itemize}
+\end{hcimap}
+
+%──────────────────────────────────────────────────────────────────────────────
+\subsection{Loan Application Wizard}
+%──────────────────────────────────────────────────────────────────────────────
+
+% Screenshot filenames: loan1.png, loan2.png, loan3.png, loan4.png
+\screen{loan1.png}{Loan Application}{loan1}
+\screen{loan2.png}{Loan Application}{loan2}
+\screen{loan3.png}{Loan Application}{loan3}
+\screen{loan4.png}{Loan Application}{loan4}
+\subsubsection{Purpose \& Design Choices}
+
+\begin{itemize}[leftmargin=1.5em,itemsep=4pt]
+
+\item \textbf{Primary Goal:}
+Simplify a complex loan application process.
+
+\item \textbf{3-Step Wizard:}
+Breaks long forms into manageable sections.
+
+\item \textbf{Live Eligibility Meter:}
+Provides real-time feedback on approval chances.
+
+\item \textbf{Inline Validation:}
+Ensures correctness before moving to next step.
+
+\item \textbf{Review Step:}
+Allows users to verify and edit information before submission.
+
+\item \textbf{Save Draft Feature:}
+Prevents data loss and supports incomplete sessions.
+
+\item \textbf{User Experience Impact:}
+Reduces overwhelm and increases completion rate.
+
+\item \textbf{HCI Justification:}
+Applies Progressive Disclosure, Tesler’s Law, and Error Prevention.
+
+\end{itemize}
+\begin{hcimap}
+\begin{itemize}[leftmargin=1.2em,itemsep=2pt]
+  \item \ptag{Miller's 7$\pm$2 / Chunking} --- 3-step wizard chunks a complex process into 3 manageable cognitive units.
+  \item \ptag{Progressive Disclosure} --- Each step reveals only the fields relevant to that stage; never overwhelms.
+  \item \ptag{Tesler's Law} --- Complexity of loan eligibility calculation absorbed by the Eligibility Meter.
+  \item \ptag{Error Prevention} --- Inline real-time validation with specific instructional messages.
+  \item \ptag{Shneiderman: Dialog Closure} --- Step 3 review provides complete summary before irreversible submission.
+  \item \ptag{User Control \& Freedom} --- Previous/Next and direct Edit buttons allow free traversal.
+  \item \ptag{Visibility of System Status} --- Progress bar, eligibility meter, and inline validation all provide continuous feedback.
+  \item \ptag{Shneiderman: Easy Reversal} --- Edit buttons on review screen allow targeted correction without losing other data.
+  \item \ptag{Robustness} --- Save Draft prevents data loss across sessions.
+  \item \ptag{Fitts's Law} --- Tenure buttons and full-width range slider are large touch targets.
+  \item \ptag{Law of Learning} --- Consistent form pattern across all steps reduces re-learning at each stage.
+\end{itemize}
+\end{hcimap}
+
+%──────────────────────────────────────────────────────────────────────────────
+\subsection{EMI Marketplace}
+%──────────────────────────────────────────────────────────────────────────────
+
+% Screenshot filenames: emi1.png, emi2.png
+\screen{emi1.png}{EMI Marketplace}{emi1}
+\screen{emi2.png}{EMI Marketplace}{emi2}
+
+\subsubsection{Purpose \& Design Choices}
+
+\begin{itemize}[leftmargin=1.5em,itemsep=4pt]
+
+\item \textbf{Primary Goal:}
+Enable users to browse and purchase products using EMI.
+
+\item \textbf{Familiar Layout:}
+Design mimics e-commerce platforms to leverage user familiarity.
+
+\item \textbf{Filter Sidebar:}
+Allows quick narrowing of product options.
+
+\item \textbf{Product Cards:}
+Uniform layout improves scanning speed.
+
+\item \textbf{Badges and Tags:}
+"No Cost EMI" and "Recommended" guide decisions.
+
+\item \textbf{User Experience Impact:}
+Speeds up decision-making and reduces cognitive effort.
+
+\item \textbf{HCI Justification:}
+Uses Hick’s Law, Recognition over Recall, and Gestalt Similarity.
+
+\end{itemize}
+
+\begin{hcimap}
+\begin{itemize}[leftmargin=1.2em,itemsep=2pt]
+  \item \ptag{Progressive Disclosure} --- Filter groups collapse; full product detail revealed on click.
+  \item \ptag{Hick's Law} --- Filter categories limited to 5 to prevent paralysis.
+  \item \ptag{Recognition over Recall} --- All filter values shown as visible options; no free-text guessing.
+  \item \ptag{Similarity (Gestalt)} --- All product cards identical in structure; grid scanned as homogeneous collection.
+  \item \ptag{Scarcity (Persuasion)} --- ``Only 3 left'' and countdown timer leverage FOMO ethically.
+  \item \ptag{Social Proof (Persuasion)} --- Sold count and reviews provide pre-purchase validation.
+  \item \ptag{Fitts's Law} --- Full-card hover state; entire card clickable, not just a small button.
+  \item \ptag{Von Restorff Effect} --- Discount percentage badge (orange) stands out from the card palette.
+  \item \ptag{Common Region (Gestalt)} --- Each product is a visually bounded card region.
+  \item \ptag{Mental Models} --- Layout mirrors major Indian e-commerce platforms.
+\end{itemize}
+\end{hcimap}
+
+%──────────────────────────────────────────────────────────────────────────────
+\subsection{Repayment Center}
+%──────────────────────────────────────────────────────────────────────────────
+
+% Screenshot filenames: insurance1.png, insurance2.png, insurance3.png
+% (Note: repayment screenshots use the insurance prefix in the provided file list)
+\screen{insurance1.png}{Repayment Center}{repay1}
+\screen{insurance2.png}{Repayment Center}{repay2}
+\screen{insurance3.png}{Repayment Center}{repay3}
+
+\subsubsection{Purpose \& Design Choices}
+
+\begin{itemize}[leftmargin=1.5em,itemsep=4pt]
+
+\item \textbf{Primary Goal:}
+Enable secure and confident payment execution.
+
+\item \textbf{Status Cards:}
+Provide full payment context before action.
+
+\item \textbf{Recommended Payment Method:}
+Reduces decision complexity.
+
+\item \textbf{Confirmation Dialog:}
+Prevents accidental transactions.
+
+\item \textbf{Processing Feedback:}
+Spinner ensures users know the system is working.
+
+\item \textbf{User Experience Impact:}
+Reduces anxiety during financial transactions.
+
+\item \textbf{HCI Justification:}
+Applies Visibility of System Status and Error Prevention.
+
+\end{itemize}
+\begin{hcimap}
+\begin{itemize}[leftmargin=1.2em,itemsep=2pt]
+  \item \ptag{Shneiderman: Dialog Closure} --- 4-stage flow (Form → Confirm → Processing → Receipt) provides clear closure.
+  \item \ptag{Error Prevention} --- Confirmation dialog forces deliberate second review before irreversible payment.
+  \item \ptag{Visibility of System Status} --- Processing spinner eliminates the ``did it work?'' anxiety during async operations.
+  \item \ptag{Hick's Law} --- Recommended badge on UPI reduces effective choice from 3 to 1 for most users.
+  \item \ptag{Closure (Gestalt)} --- Payment receipt with full transaction details completes the user's mental task model.
+  \item \ptag{Trust (Persuasion)} --- SSL notice, Shield icon on CTA, and ``256-bit encryption'' footer address payment anxiety.
+  \item \ptag{Shneiderman: Locus of Control} --- User explicitly confirms each step; no auto-processing.
+  \item \ptag{AutoPay (Flexibility)} --- Advanced users can set up automated payment; novices do it manually.
+\end{itemize}
+\end{hcimap}
+
+%──────────────────────────────────────────────────────────────────────────────
+\subsection{User Profile}
+%──────────────────────────────────────────────────────────────────────────────
+
+% Screenshot filenames: profile1.png, profile2.png, profile3.png, profile4.png, profile5.png
+\screen{profile1.png}{User Profile}{prof1}
+\screen{profile2.png}{User Profile}{prof2}
+\screen{profile3.png}{User Profile}{prof3}
+\screen{profile4.png}{User Profile}{prof4}
+\screen{profile5.png}{User Profile }{prof5}
+\subsubsection{Purpose \& Design Choices}
+
+\begin{itemize}[leftmargin=1.5em,itemsep=4pt]
+
+\item \textbf{Primary Goal:}
+Provide a centralized space for managing user information, loans, and account settings.
+
+\item \textbf{Sidebar Navigation:}
+Follows a familiar SaaS pattern, enabling easy switching between profile sections.
+
+\item \textbf{Persistent Credit Score Widget:}
+Continuously reinforces user’s financial status and engagement.
+
+\item \textbf{Loan Summary Cards:}
+Displays key loan metrics before detailed breakdowns.
+
+\item \textbf{Color-Coded Reminders:}
+Uses red and yellow indicators for prioritization of tasks.
+
+\item \textbf{Security Visibility:}
+Highlights password and 2FA settings to encourage safer user behavior.
+
+\item \textbf{User Experience Impact:}
+Improves organization, reduces search effort, and enhances clarity.
+
+\item \textbf{HCI Justification:}
+Applies Consistency, Recognition over Recall, and Gestalt Proximity.
+
+\end{itemize}
+\begin{hcimap}
+\begin{itemize}[leftmargin=1.2em,itemsep=2pt]
+  \item \ptag{Shneiderman: Consistency} --- Sidebar navigation pattern matches the Accessibility Settings page.
+  \item \ptag{Common Region (Gestalt)} --- Each profile section in clearly bounded card container.
+  \item \ptag{Recognition over Recall} --- All 5 profile sections visible in sidebar; no need to search or remember.
+  \item \ptag{Colour Semantics} --- Red border for urgent reminders; yellow for pending; green for informational.
+  \item \ptag{Authority (Persuasion)} --- ``Premium Member'' badge reinforces user's investment in the platform.
+  \item \ptag{Proximity (Gestalt)} --- Loan amount + outstanding + EMI data grouped within each loan card.
+  \item \ptag{Progressive Disclosure} --- Summary KPIs at top; detailed loan cards below; edit/action buttons on demand.
+\end{itemize}
+\end{hcimap}
+
+%──────────────────────────────────────────────────────────────────────────────
+\subsection{Accessibility Settings}
+%──────────────────────────────────────────────────────────────────────────────
+
+% Screenshot filenames: settings1.png, settings2.png, settings3.png, settings4.png, settings5.png
+\screen{settings1.png}{Accessibility Settings}{set1}
+\screen{settings2.png}{Accessibility Settings}{set2}
+\screen{settings3.png}{Accessibility Settings}{set3}
+\screen{settings4.png}{Accessibility Settings}{set4}
+\screen{settings5.png}{Accessibility Settings}{set5}
+\subsubsection{Purpose \& Design Choices}
+
+\begin{itemize}[leftmargin=1.5em,itemsep=4pt]
+
+\item \textbf{Primary Goal:}
+Ensure the platform is usable by users with diverse abilities and preferences.
+
+\item \textbf{Categorized Settings:}
+Divides options into Visual, Interaction, Assistive, and Language for clarity.
+
+\item \textbf{Live Preview Feature:}
+Allows users to see text size changes instantly without saving.
+
+\item \textbf{Multiple Accessibility Options:}
+Includes dark mode, contrast toggle, screen reader, and voice navigation.
+
+\item \textbf{Language Support:}
+Supports multiple Indian languages to improve inclusivity.
+
+\item \textbf{Clear Toggle Labels:}
+Uses text labels along with visual indicators for accessibility.
+
+\item \textbf{User Experience Impact:}
+Enhances inclusivity and usability for a broader audience.
+
+\item \textbf{HCI Justification:}
+Implements Universal Design principles such as flexibility and perceptibility.
+
+\end{itemize}
+
+\begin{hcimap}
+\begin{itemize}[leftmargin=1.2em,itemsep=2pt]
+  \item \ptag{Universal Design Principle 1 (Equitable Use)} --- Same features accessible to all users regardless of ability.
+  \item \ptag{Universal Design Principle 2 (Flexibility)} --- Multiple input modes, language options, and visual configurations.
+  \item \ptag{Universal Design Principle 3 (Simple \& Intuitive)} --- Toggle buttons with clear Enabled/Disabled labels; no ambiguity.
+  \item \ptag{Universal Design Principle 4 (Perceptible Information)} --- Live preview of text size; both visual and textual mode labels.
+  \item \ptag{Universal Design Principle 5 (Tolerance for Error)} --- Settings can be changed at any time; no irreversible commitment.
+  \item \ptag{Universal Design Principle 6 (Low Physical Effort)} --- Voice navigation option for motor-impaired users.
+  \item \ptag{Visibility of System Status} --- Live preview panel and button state text provide instant feedback.
+  \item \ptag{Shneiderman: Closure} --- ``Save All Settings'' banner with cross-device sync explanation closes the settings task.
+\end{itemize}
+\end{hcimap}
+
+%──────────────────────────────────────────────────────────────────────────────
+\subsection{Support Center}
+%──────────────────────────────────────────────────────────────────────────────
+
+% Screenshot filenames: support1.png, support2.png, support3.png, support4.png, support5.png, AI-chat1.png, AI-chat2.png
+\screen{support1.png}{Support Center}{sup1}
+\screen{support2.png}{Support Center}{sup2}
+\screen{support3.png}{Support Center}{sup3}
+\screen{support4.png}{Support Center }{sup4}
+\screen{support5.png}{Support Center }{sup5}
+\dualscreen{AI-chat1.png}{AI Chatbot}{aichat1}{AI-chat2.png}{AI Chatbot — Conversation flow}{aichat2}
+
+\subsubsection{Purpose \& Design Choices}
+
+\begin{itemize}[leftmargin=1.5em,itemsep=4pt]
+
+\item \textbf{Primary Goal:}
+Provide quick and efficient problem resolution for users.
+
+\item \textbf{Popular Issues Section:}
+Displays most common problems to reduce search effort.
+
+\item \textbf{Search Functionality:}
+Allows users to directly find relevant help topics.
+
+\item \textbf{FAQ Accordion:}
+Keeps interface clean by showing answers only when needed.
+
+\item \textbf{Multiple Contact Options:}
+Includes chat, email, and call for different urgency levels.
+
+\item \textbf{AI Chatbot Integration:}
+Provides instant support and guided assistance.
+
+\item \textbf{User Experience Impact:}
+Reduces dependency on human support and speeds up issue resolution.
+
+\item \textbf{HCI Justification:}
+Applies Pareto Principle, Progressive Disclosure, and User Support Systems.
+
+\end{itemize}
+\begin{hcimap}
+\begin{itemize}[leftmargin=1.2em,itemsep=2pt]
+  \item \ptag{User Support: Task-Specific Help} --- Popular Issues shortcuts answer 80\% of queries without reading.
+  \item \ptag{User Support: Wizards} --- Chat bot guides users step-by-step through their problem.
+  \item \ptag{Progressive Disclosure} --- FAQ shows question text only; full answer revealed on expansion.
+  \item \ptag{Pareto 80/20} --- 5 popular issue cards represent the vital few with highest impact.
+  \item \ptag{Recognition over Recall} --- Icons on Popular Issue cards supplement text labels; faster pattern recognition.
+  \item \ptag{Shneiderman: Reduce Memory Load} --- Ticket ID tracker externalises support status; no need to call.
+  \item \ptag{Fitts's Law} --- Floating chatbot fixed in accessible corner; predictable location across all pages.
+  \item \ptag{Availability (User Support Requirement)} --- 24x7 chatbot; stated response times on email/call options.
+  \item \ptag{Unobtrusiveness} --- Chatbot is floating/dismissible; does not interfere with main page content.
+\end{itemize}
+\end{hcimap}
+
+
+\section{Navigation Design}
+
+\textbf{Clear \& Shallow Navigation.}
+All primary actions are accessible within 1--2 clicks. Navigation is limited to key sections (Loans, EMI Store, Support), reducing decision complexity and improving speed.
+
+\textbf{Consistency \& Predictability.}
+Sticky navbar, active tab highlighting, and logo-to-home behavior follow standard web conventions, ensuring zero learning curve.
+
+\textbf{User Control.}
+Back buttons preserve state, breadcrumbs provide context, and mobile navigation collapses into a hamburger menu for responsiveness.
+
+
+\section{Visual Design Principles}
+
+\textbf{Hierarchy \& Clarity.}
+Clear typography levels guide user attention from headings to details, ensuring quick scanning.
+
+\textbf{Contrast \& Accessibility.}
+High contrast ratios (navy on white) ensure readability and WCAG compliance.
+
+\textbf{Consistency \& Unity.}
+Uniform colours, spacing, and component styles create a cohesive experience across all modules.
+
+\textbf{Dominance.}
+Important elements like CTA buttons and financial values are visually emphasized for quick decision-making.
+
+\section{Color Psychology}
+
+\textbf{Navy Blue (Trust).}
+Used for primary actions and navigation to communicate stability and security.
+
+\textbf{Green (Success).}
+Represents successful transactions and positive financial status.
+
+\textbf{Red \& Amber (Attention).}
+Used for errors, warnings, and pending states to guide user focus.
+
+\textbf{White \& Gray (Clarity).}
+Provide clean backgrounds and reduce visual clutter.
+
+\section{Persuasion Psychology}
+
+\textbf{Social Proof.}
+Customer ratings, testimonials, and usage stats build credibility.
+
+\textbf{Authority.}
+RBI badges, SSL security, and certifications increase trust.
+
+\textbf{Reciprocity.}
+Free EMI calculator provides value before commitment.
+
+\textbf{Scarcity.}
+Limited-time offers and stock indicators encourage faster decisions.
+
+\textbf{Commitment.}
+Multi-step loan wizard encourages completion once started.
+
+\section{Micro-Interactions}
+
+\textbf{Hover Feedback.}
+Buttons and cards respond visually, indicating interactivity.
+
+\textbf{Loading States.}
+Spinners and disabled buttons prevent confusion during processing.
+
+\textbf{Inline Validation.}
+Errors are shown immediately with clear instructions.
+
+\textbf{Confirmation Dialogs.}
+Critical actions require explicit confirmation to prevent mistakes.
+
+\section{Accessibility Audit}
+
+\textbf{Readable Design.}
+High contrast text and scalable font sizes ensure readability.
+
+\textbf{Keyboard Support.}
+All forms and navigation are accessible via keyboard.
+
+\textbf{Error Clarity.}
+Errors are clearly identified with text, colour, and icons.
+
+\textbf{Inclusive Features.}
+Supports multiple languages and accessibility settings for diverse users.
+\section{HCI Principles: Complete Reference Table}
+
+\subsection{Shneiderman's Eight Golden Rules — Implementation Summary}
+
+\begin{table}[H]
+\centering\small
+\begin{tabularx}{\textwidth}{l X}
+\toprule
+\textbf{Rule} & \textbf{Implementation in NeoFinance Pro} \\
+\midrule
+
+1. Strive for Consistency &
+Uniform button styles, card layouts, and color semantics across all modules \\
+
+2. Enable Shortcuts &
+Quick Actions (Pay EMI), AutoPay, and keyboard-friendly form navigation \\
+
+3. Offer Informative Feedback &
+Real-time validation, EMI calculator updates, eligibility meter, spinners \\
+
+4. Design for Closure &
+Loan review step, payment confirmation dialog, success receipt screens \\
+
+5. Prevent Errors &
+Inline validation, disabled buttons, confirmation dialogs before payments \\
+
+6. Permit Easy Reversal &
+Back buttons, Edit options, Save Draft functionality \\
+
+7. Support Locus of Control &
+No auto actions; all operations require explicit user confirmation \\
+
+8. Reduce Memory Load &
+Breadcrumbs, visible filters, progress indicators, dashboard summaries \\
+
+\bottomrule
+\end{tabularx}
+\end{table}
+\subsection{Nielsen's Ten Heuristics — Implementation Summary}
+
+\begin{table}[H]
+\centering\small
+\begin{tabularx}{\textwidth}{l X}
+\toprule
+\textbf{Heuristic} & \textbf{Implementation in NeoFinance Pro} \\
+\midrule
+
+1. Visibility of System Status &
+Spinners, progress bars, eligibility meter, active navigation highlight \\
+
+2. Match System \& Real World &
+Loan process mirrors real banking workflows; EMI terminology familiar \\
+
+3. User Control \& Freedom &
+Cancel options, back navigation, editable forms, AutoPay opt-in \\
+
+4. Consistency \& Standards &
+Standard web patterns: logo-to-home, form layouts, navigation structure \\
+
+5. Error Prevention &
+Real-time validation, constraints, confirmation dialogs \\
+
+6. Recognition over Recall &
+Visible filters, sidebar navigation, category labels \\
+
+7. Flexibility \& Efficiency &
+Quick Actions, multiple navigation paths, AutoPay for advanced users \\
+
+8. Aesthetic \& Minimalist Design &
+Clean layout, limited color palette, no unnecessary elements \\
+
+9. Help Recover from Errors &
+Clear, specific error messages with instructions \\
+
+10. Help \& Documentation &
+FAQ, AI chatbot, tooltips, support center \\
+
+\bottomrule
+\end{tabularx}
+\end{table}
+
+
+\section{Conclusion}
+
+NeoFinance Pro demonstrates that effective interface design is driven by structured application of HCI principles.
+
+Key outcomes include reduced cognitive load through simplified workflows, strong error prevention mechanisms, and inclusive design through accessibility features. Trust is reinforced through visual design, transparency, and persuasion techniques.
+
+Overall, the system delivers a user experience that is intuitive, efficient, and grounded in established HCI theory.
+
+
+
+
+
+\end{document}

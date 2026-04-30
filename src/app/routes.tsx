@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import { Layout } from "./components/Layout";
+import { AdminLayout } from "./components/AdminLayout";
 import { Homepage } from "./components/Homepage";
 import { Dashboard } from "./components/Dashboard";
 import { LoanApplication } from "./components/LoanApplication";
@@ -11,6 +12,12 @@ import { AdminDashboard } from "./components/AdminDashboard";
 import { Login } from "./components/Login";
 import { Profile } from "./components/Profile";
 import { NotFound } from "./components/NotFound";
+import { AdminLogin } from "./components/AdminLogin";
+import { LoanApplications } from "./components/LoanApplications";
+import { ApprovedLoans } from "./components/ApprovedLoans";
+import { EMITracker } from "./components/EMITracker";
+import { CustomerManagement } from "./components/CustomerManagement";
+import { CustomerProfile } from "./components/CustomerProfile";
 
 export const router = createBrowserRouter([
   {
@@ -26,8 +33,20 @@ export const router = createBrowserRouter([
       { path: "settings", Component: AccountSettings },
       { path: "login", Component: Login },
       { path: "profile", Component: Profile },
-      { path: "admin", Component: AdminDashboard },
+      { path: "admin-login", Component: AdminLogin },
       { path: "*", Component: NotFound },
+    ],
+  },
+  {
+    path: "/admin",
+    Component: AdminLayout,
+    children: [
+      { index: true, Component: AdminDashboard },
+      { path: "loan-applications", Component: LoanApplications },
+      { path: "approved-loans", Component: ApprovedLoans },
+      { path: "emi-tracker", Component: EMITracker },
+      { path: "customers", Component: CustomerManagement },
+      { path: "customers/:customerId", Component: CustomerProfile },
     ],
   },
 ]);

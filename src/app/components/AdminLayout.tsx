@@ -1,8 +1,8 @@
 import { Outlet, Link, useLocation } from "react-router";
-import { User, Menu, X, LogOut, Type, Contrast, Moon } from "lucide-react";
+import { User, Menu, X, LogOut, Type, Contrast, Moon, ArrowLeftRight } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 
-export function Layout() {
+export function AdminLayout() {
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -10,7 +10,6 @@ export function Layout() {
   const settingsRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
 
-  // Quick settings state
   const [textSize, setTextSize] = useState(16);
   const [darkMode, setDarkMode] = useState(false);
   const [highContrast, setHighContrast] = useState(false);
@@ -28,40 +27,37 @@ export function Layout() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const navigation = [
-    { name: "Loans", href: "/loan-application" },
-    { name: "EMI Store", href: "/emi-marketplace" },
-    { name: "Investments", href: "/dashboard" },
-    { name: "Insurance", href: "/repayment" },
-    { name: "Support", href: "/support" },
+  const adminNavigation = [
+    { name: "Dashboard", href: "/admin" },
+    { name: "Loan Applications", href: "/admin/loan-applications" },
+    { name: "Approved Loans", href: "/admin/approved-loans" },
+    { name: "EMI Tracker", href: "/admin/emi-tracker" },
+    { name: "Customers", href: "/admin/customers" },
   ];
 
   const isActive = (path: string) => {
-    if (path === "/" && location.pathname === "/") return true;
-    if (path !== "/" && location.pathname.startsWith(path)) return true;
+    if (path === "/admin" && location.pathname === "/admin") return true;
+    if (path !== "/admin" && location.pathname.startsWith(path)) return true;
     return false;
   };
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
       <header className="bg-white border-b border-[#E5E7EB] sticky top-0 z-50 shadow-sm">
         <div className="mx-auto px-6 lg:px-12 max-w-[1400px]">
           <div className="flex h-20 items-center justify-between">
-            {/* Logo */}
-            <Link to="/" className="flex items-center gap-3">
+            <Link to="/admin" className="flex items-center gap-3">
               <div className="w-12 h-12 bg-[#0A2540] rounded-md flex items-center justify-center">
                 <span className="text-white font-bold text-xl">NF</span>
               </div>
               <div className="hidden sm:block">
                 <div className="text-[#0A2540] font-bold text-xl tracking-tight">NeoFinance</div>
-                <div className="text-[#64748B] text-xs tracking-wider">PRO</div>
+                <div className="text-[#64748B] text-xs tracking-wider">ADMIN PORTAL</div>
               </div>
             </Link>
 
-            {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-8">
-              {navigation.map((item) => {
+              {adminNavigation.map((item) => {
                 const active = isActive(item.href);
                 return (
                   <Link
@@ -82,47 +78,16 @@ export function Layout() {
               })}
             </nav>
 
-            {/* Right Actions */}
             <div className="flex items-center gap-4">
-              {/* Apply Now Button */}
               <Link
-                to="/loan-application"
-                className="hidden md:flex items-center gap-2 px-6 py-2.5 bg-[#0A2540] text-white font-medium text-sm rounded-md hover:bg-[#0D2F52] transition-all shadow-md"
+                to="/"
+                className="hidden md:flex items-center gap-2 px-4 py-2 border border-[#CBD5E1] text-[#64748B] text-sm font-medium rounded-md hover:border-[#334155] hover:text-[#334155] hover:bg-[#F8FAFC] transition-all"
+                title="Switch to customer view"
               >
-                Apply Now
+                <ArrowLeftRight className="w-4 h-4" />
+                Customer View
               </Link>
 
-              {/* Sign In Button */}
-              <Link
-                to="/login"
-                className="hidden md:flex items-center gap-2 px-4 py-2 text-[#0A2540] font-medium text-sm hover:bg-[#F8FAFC] rounded-md transition-all"
-              >
-                Sign In
-              </Link>
-
-              {/* Admin — subtle outlined, role separation */}
-              <Link
-                to="/admin"
-                className="hidden md:flex items-center gap-1.5 px-3 py-1.5 border border-[#CBD5E1] text-[#64748B] text-xs font-medium rounded-md hover:border-[#334155] hover:text-[#334155] hover:bg-[#F8FAFC] transition-all"
-                title="Internal admin access only"
-              >
-                <svg
-                  className="w-3 h-3"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                  />
-                </svg>
-                Admin
-              </Link>
-
-              {/* Settings Dropdown */}
               <div className="hidden md:block relative" ref={settingsRef}>
                 <button
                   onClick={() => setSettingsOpen(!settingsOpen)}
@@ -161,7 +126,6 @@ export function Layout() {
                       </button>
                     </div>
                     <div className="py-4 px-4 space-y-6">
-                      {/* Text Size Slider */}
                       <div>
                         <div className="flex items-center gap-3 mb-3">
                           <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
@@ -189,7 +153,6 @@ export function Layout() {
                         </div>
                       </div>
 
-                      {/* Dark Mode Toggle */}
                       <div className="flex items-center justify-between p-3 bg-[#F8FAFC] rounded-lg">
                         <div className="flex items-center gap-3">
                           <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
@@ -208,7 +171,6 @@ export function Layout() {
                         </button>
                       </div>
 
-                      {/* High Contrast Toggle */}
                       <div className="flex items-center justify-between p-3 bg-[#F8FAFC] rounded-lg">
                         <div className="flex items-center gap-3">
                           <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
@@ -240,7 +202,6 @@ export function Layout() {
                 )}
               </div>
 
-              {/* Profile Dropdown */}
               <div className="hidden md:block relative" ref={profileRef}>
                 <button
                   onClick={() => setProfileOpen(!profileOpen)}
@@ -256,16 +217,16 @@ export function Layout() {
                     <div className="px-4 pb-4">
                       <div className="flex items-center gap-3 mb-4">
                         <div className="w-14 h-14 bg-[#0A2540] rounded-full flex items-center justify-center text-white text-xl font-bold">
-                          RK
+                          AD
                         </div>
                         <div className="flex-1">
-                          <div className="text-[#0A2540] font-bold text-lg">Rajesh Kumar</div>
-                          <div className="text-sm text-[#64748B]">rajesh.kumar@email.com</div>
+                          <div className="text-[#0A2540] font-bold text-lg">Admin User</div>
+                          <div className="text-sm text-[#64748B]">admin@neofinance.com</div>
                         </div>
                       </div>
                       <div className="flex items-center gap-2 text-xs mb-4">
-                        <span className="px-3 py-1 bg-blue-100 text-blue-600 rounded-full">Premium Member</span>
-                        <span className="px-3 py-1 bg-green-100 text-green-600 rounded-full">Score: 805</span>
+                        <span className="px-3 py-1 bg-purple-100 text-purple-600 rounded-full">Administrator</span>
+                        <span className="px-3 py-1 bg-green-100 text-green-600 rounded-full">All Access</span>
                       </div>
                       <Link
                         to="/profile"
@@ -277,7 +238,7 @@ export function Layout() {
                     </div>
                     <div className="px-4 pt-3 border-t border-[#E5E7EB]">
                       <Link
-                        to="/login"
+                        to="/admin-login"
                         onClick={() => setProfileOpen(false)}
                         className="w-full px-4 py-2 text-red-600 hover:bg-red-50 rounded-md transition-colors flex items-center gap-2 justify-center text-sm font-medium"
                       >
@@ -299,11 +260,10 @@ export function Layout() {
           </div>
         </div>
 
-        {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="lg:hidden border-t border-[#E5E7EB] bg-white">
             <nav className="px-6 py-4 space-y-1">
-              {navigation.map((item) => {
+              {adminNavigation.map((item) => {
                 const active = isActive(item.href);
                 return (
                   <Link
@@ -320,27 +280,13 @@ export function Layout() {
                   </Link>
                 );
               })}
-              <div className="pt-4 space-y-2">
+              <div className="pt-4">
                 <Link
-                  to="/login"
+                  to="/"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block w-full px-4 py-3 text-[#0A2540] font-medium text-sm bg-[#F8FAFC] rounded-md text-center"
+                  className="block w-full px-4 py-3 border border-[#CBD5E1] text-[#64748B] text-sm font-medium rounded-md text-center hover:border-[#334155] hover:text-[#334155] transition-all"
                 >
-                  Sign In
-                </Link>
-                <Link
-                  to="/admin"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block w-full px-4 py-2 border border-[#CBD5E1] text-[#64748B] text-xs font-medium rounded-md text-center hover:border-[#334155] hover:text-[#334155] transition-all"
-                >
-                  Admin Portal
-                </Link>
-                <Link
-                  to="/loan-application"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block w-full px-4 py-3 bg-[#0A2540] text-white font-medium text-sm rounded-md text-center"
-                >
-                  Apply Now
+                  Switch to Customer View
                 </Link>
               </div>
             </nav>
@@ -348,15 +294,13 @@ export function Layout() {
         )}
       </header>
 
-      {/* Main Content */}
       <main>
         <Outlet />
       </main>
 
-      {/* Footer */}
       <footer className="bg-[#0A2540] text-white">
         <div className="mx-auto px-6 lg:px-12 max-w-[1400px] py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
             <div className="lg:col-span-2">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-12 h-12 bg-white rounded-md flex items-center justify-center">
@@ -364,60 +308,34 @@ export function Layout() {
                 </div>
                 <div>
                   <div className="text-white font-bold text-xl tracking-tight">NeoFinance</div>
-                  <div className="text-[#94A3B8] text-xs tracking-wider">PRO</div>
+                  <div className="text-[#94A3B8] text-xs tracking-wider">ADMIN PORTAL</div>
                 </div>
               </div>
               <p className="text-[#94A3B8] text-sm leading-relaxed mb-6 max-w-sm">
-                India's most trusted digital lending platform. Providing smart financial solutions since 2010.
+                Internal administrative portal for managing loans, applications, and customer accounts.
               </p>
-              <div className="flex items-center gap-4 text-sm text-[#94A3B8]">
-                <span className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  RBI Registered
-                </span>
-                <span>ISO 27001</span>
-              </div>
             </div>
             <div>
-              <h3 className="font-bold mb-4 text-white">Products</h3>
+              <h3 className="font-bold mb-4 text-white">Admin Tools</h3>
               <ul className="space-y-3 text-sm text-[#94A3B8]">
-                <li><Link to="/loan-application" className="hover:text-white transition-colors">Personal Loans</Link></li>
-                <li><Link to="/loan-application" className="hover:text-white transition-colors">Business Loans</Link></li>
-                <li><Link to="/emi-marketplace" className="hover:text-white transition-colors">EMI Store</Link></li>
-                <li><Link to="/dashboard" className="hover:text-white transition-colors">Fixed Deposits</Link></li>
-                <li><Link to="/dashboard" className="hover:text-white transition-colors">Investments</Link></li>
+                <li><Link to="/admin" className="hover:text-white transition-colors">Dashboard</Link></li>
+                <li><Link to="/admin/loan-applications" className="hover:text-white transition-colors">Applications</Link></li>
+                <li><Link to="/admin/approved-loans" className="hover:text-white transition-colors">Approved Loans</Link></li>
+                <li><Link to="/admin/customers" className="hover:text-white transition-colors">Customers</Link></li>
               </ul>
             </div>
             <div>
-              <h3 className="font-bold mb-4 text-white">Company</h3>
+              <h3 className="font-bold mb-4 text-white">Support</h3>
               <ul className="space-y-3 text-sm text-[#94A3B8]">
-                <li><a href="#" className="hover:text-white transition-colors">About Us</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
-                <li><Link to="/support" className="hover:text-white transition-colors">Contact Us</Link></li>
-                <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Press</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-bold mb-4 text-white">Resources</h3>
-              <ul className="space-y-3 text-sm text-[#94A3B8]">
-                <li><Link to="/support" className="hover:text-white transition-colors">Help Center</Link></li>
-                <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Terms of Use</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Fair Practice</a></li>
-                <li><Link to="/accessibility" className="hover:text-white transition-colors">Accessibility</Link></li>
+                <li><a href="#" className="hover:text-white transition-colors">Help Center</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Documentation</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">System Status</a></li>
               </ul>
             </div>
           </div>
           <div className="pt-8 border-t border-white/10">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-[#94A3B8]">
-              <p>© 2026 NeoFinance Pro. All rights reserved.</p>
-              <div className="flex gap-6">
-                <a href="#" className="hover:text-white transition-colors">Facebook</a>
-                <a href="#" className="hover:text-white transition-colors">Twitter</a>
-                <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
-                <a href="#" className="hover:text-white transition-colors">Instagram</a>
-              </div>
+              <p>© 2026 NeoFinance Pro. Admin Portal - Internal Use Only.</p>
             </div>
           </div>
         </div>

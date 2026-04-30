@@ -1,4 +1,5 @@
 import { TrendingUp, TrendingDown, Users, DollarSign, FileText, AlertCircle, Download, Filter } from "lucide-react";
+import { Link } from "react-router";
 import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
 const monthlyData = [
@@ -42,16 +43,10 @@ export function AdminDashboard() {
             <h1 className="text-3xl font-semibold text-[#0A2540] mb-2">Admin Analytics Dashboard</h1>
             <p className="text-[#64748B]">Real-time insights and performance metrics</p>
           </div>
-          <div className="flex items-center gap-3">
-            <button className="flex items-center gap-2 px-4 py-2 bg-white text-[#0A2540] rounded-lg hover:bg-[#F8FAFC] transition-all border border-[#E2E8F0]">
-              <Filter className="w-5 h-5" />
-              <span>Filter</span>
-            </button>
-            <button className="flex items-center gap-2 px-4 py-2 bg-[#0A2540] text-white rounded-lg hover:bg-[#0D2F52] transition-all">
-              <Download className="w-5 h-5" />
-              <span>Export Report</span>
-            </button>
-          </div>
+          <button className="flex items-center gap-2 px-4 py-2 bg-[#0A2540] text-white rounded-lg hover:bg-[#0D2F52] transition-all">
+            <Download className="w-5 h-5" />
+            <span>Export Report</span>
+          </button>
         </div>
 
         {/* Key Metrics */}
@@ -129,13 +124,13 @@ export function AdminDashboard() {
             <ResponsiveContainer width="100%" height={300}>
               <AreaChart data={monthlyData}>
                 <defs>
-                  <linearGradient id="colorDisbursed" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#0A2540" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#0A2540" stopOpacity={0}/>
+                  <linearGradient id="adminColorDisbursed" x1="0" y1="0" x2="0" y2="1">
+                    <stop key="disbursed-start" offset="5%" stopColor="#0A2540" stopOpacity={0.3}/>
+                    <stop key="disbursed-end" offset="95%" stopColor="#0A2540" stopOpacity={0}/>
                   </linearGradient>
-                  <linearGradient id="colorCollected" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#C9A227" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#C9A227" stopOpacity={0}/>
+                  <linearGradient id="adminColorCollected" x1="0" y1="0" x2="0" y2="1">
+                    <stop key="collected-start" offset="5%" stopColor="#C9A227" stopOpacity={0.3}/>
+                    <stop key="collected-end" offset="95%" stopColor="#C9A227" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" />
@@ -151,8 +146,8 @@ export function AdminDashboard() {
                   formatter={(value) => `$${Number(value).toLocaleString()}`}
                 />
                 <Legend />
-                <Area type="monotone" dataKey="disbursed" stroke="#0A2540" strokeWidth={2} fillOpacity={1} fill="url(#colorDisbursed)" name="Disbursed" />
-                <Area type="monotone" dataKey="collected" stroke="#C9A227" strokeWidth={2} fillOpacity={1} fill="url(#colorCollected)" name="Collected" />
+                <Area type="monotone" dataKey="disbursed" stroke="#0A2540" strokeWidth={2} fillOpacity={1} fill="url(#adminColorDisbursed)" name="Disbursed" />
+                <Area type="monotone" dataKey="collected" stroke="#C9A227" strokeWidth={2} fillOpacity={1} fill="url(#adminColorCollected)" name="Collected" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
@@ -262,7 +257,7 @@ export function AdminDashboard() {
               <h3 className="text-lg font-semibold text-[#0A2540] mb-1">Recent Applications</h3>
               <p className="text-sm text-[#64748B]">Latest loan requests</p>
             </div>
-            <button className="text-[#0A2540] text-sm hover:text-[#C9A227] transition-colors">View All</button>
+            <Link to="/admin/loan-applications" className="text-[#0A2540] text-sm hover:text-[#C9A227] transition-colors">View All</Link>
           </div>
 
           <div className="overflow-x-auto">

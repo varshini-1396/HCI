@@ -13,7 +13,7 @@ import {
   MessageSquare,
   XCircle
 } from "lucide-react";
-import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 const emiProgressData = [
   { month: "Jan", paid: 58500, pending: 41500 },
@@ -213,7 +213,7 @@ export function Dashboard() {
               </div>
 
               <ResponsiveContainer width="100%" height={240}>
-                <BarChart data={emiProgressData}>
+                <LineChart data={emiProgressData} margin={{ top: 4, right: 4, left: 4, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" vertical={false} />
                   <XAxis
                     dataKey="month"
@@ -237,9 +237,9 @@ export function Dashboard() {
                     }}
                     formatter={(value) => `₹${Number(value).toLocaleString('en-IN')}`}
                   />
-                  <Bar dataKey="paid" stackId="a" fill="#16A34A" radius={[0, 0, 4, 4]} name="Paid" />
-                  <Bar dataKey="pending" stackId="a" fill="#E5E7EB" radius={[4, 4, 0, 0]} name="Pending" />
-                </BarChart>
+                  <Line type="monotone" dataKey="paid" stroke="#16A34A" strokeWidth={2} name="Paid" dot={false} activeDot={{ r: 4 }} />
+                  <Line type="monotone" dataKey="pending" stroke="#94A3B8" strokeWidth={2} name="Pending" dot={false} activeDot={{ r: 4 }} />
+                </LineChart>
               </ResponsiveContainer>
 
               <div className="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-[#E5E7EB]">
